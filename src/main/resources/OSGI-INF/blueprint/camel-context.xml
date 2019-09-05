@@ -53,7 +53,7 @@
     </bean>
  -->
     <!-- order bean is our business logic bean that creates new orders -->
-    <bean class="org.apache.camel.example.sql.OrderBean" id="orderBean"/>
+    <!-- <bean class="org.apache.camel.example.sql.OrderBean" id="orderBean"/> -->
 
     <!-- here is Camel configured with a number of routes -->
     <camelContext id="rest-sql-camel-context" xmlns="http://camel.apache.org/schema/blueprint">
@@ -61,10 +61,11 @@
         <!-- use Camel property placeholder loaded from the given file -->
         <!-- <propertyPlaceholder id="placeholder" location="classpath:sql.properties"/> -->
 
-        <restConfiguration apiContextPath="/api-doc" bindingMode="json" component="servlet" contextPath="/camel-rest-sql" port="{{env:HTTP_PORT:8181}}"/>
+        <restConfiguration bindingMode="off" component="servlet" contextPath="/camel-rest-sql"/>
+         <!-- <restConfiguration apiContextPath="/api-doc" bindingMode="json" component="servlet" contextPath="/camel-rest-sql" port="{{env:HTTP_PORT:8181}}"/> -->
 
         <!-- rest service for books -->
-        <rest consumes="application/json" path="/books" produces="application/json">
+        <rest apiDocs="true"  path="/books">
             <!-- rest service that fetches names of all books -->
            <!--  <get outType="org.apache.camel.example.sql.model.Book" uri="/">
                 <to uri="sql:{{sql.selectBooks}}?outputType=SelectList&amp;outputClass=org.apache.camel.example.sql.model.Book"/>
